@@ -1,0 +1,11 @@
+.nav-bike{
+    color: white !important;
+    font-weight: bold;
+    font-size: large;
+    padding: 0 10px;
+}
+
+.nav-bike:hover{
+    text-decoration: none;
+    color:#9CDCF9 !important;
+}
