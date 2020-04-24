@@ -6,7 +6,7 @@ const Producto = (props) => {
 
     return (
         <>
-            <Card style={{ width: '18rem', float: 'left', 'margin': '0 20px' }}>
+            <Card style={{ width: '18rem', float: 'left', 'margin-right': '15px',  'margin-top': '10px', 'margin-bottom': '10px'}}>
                 <Card.Img variant="top" src="holder.js/100px180" />
                 <Card.Body>
                     <Card.Title>{props.producto.modelo}</Card.Title>

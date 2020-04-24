@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 
 class CrearProducto extends React.Component {
@@ -11,28 +12,40 @@ class CrearProducto extends React.Component {
             modelo: '',
             precio: '',
             descripcionCorta: '',
-            imagen: '',
+            imagen: null
         }
+
+        this.fileInput = React.createRef();
     }
 
-    handleChange = (e) => {
-        const { name, value } = e.target
-        this.setState({ [name]: value })
+    handleChange = (event) => {
+        const { name, value } = event.target;
+        console.log('name ' + name + ' value ' + value);
+        this.setState({ [name]: value });
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         let url = 'http://127.0.0.1:8080/producto';
-        console.log('bicicleta '+JSON.stringify(this.state));
-        fetch('http://127.0.0.1:8080/producto', {
-            method: 'POST', 
-            body: JSON.stringify(this.state), 
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
-            .catch(error => console.error('Error:', JSON.stringify(error)))
-            .then(response => console.log('Success:', JSON.stringify(response)));
+
+        let fileImg = this.fileInput.current.files[0];
+
+        let formData = new FormData();
+        formData.append('marca', this.state.marca);
+        formData.append('modelo', this.state.modelo);
+        formData.append('precio', this.state.precio);
+        formData.append('descripcionCorta', this.state.descripcionCorta);
+        formData.append('imagen', fileImg);
+        axios({
+            url: url,
+            method: 'POST',
+            data: formData
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        });
+
+
     }
 
     render() {
@@ -59,12 +72,12 @@ class CrearProducto extends React.Component {
                     <Form.Control type="number" name="precio" onChange={this.handleChange} placeholder="Ingrese Precio" />
                 </Form.Group>
 
-                <Form.File
-                    id="custom-file"
-                    name="imagen"
-                    label="Custom file input"
-                    custom
-                />
+                <div className="mb-3">
+                    <Form.File id="formcheck-api-regular">
+                        <Form.File.Label>Subir Imagen</Form.File.Label>
+                        <Form.File.Input name="imagen" ref={this.fileInput}/>
+                    </Form.File>
+                </div>
                 <Form.Group controlId="descripcionCorta">
                     <Form.Label>Descripción Corta</Form.Label>
                     <Form.Control as="textarea" name="descripcionCorta" onChange={this.handleChange} rows="3" />
