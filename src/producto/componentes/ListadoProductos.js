@@ -10,7 +10,7 @@ class ListadoProductos extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:8080/productos')
+        fetch('http://127.0.0.1:8080/api/v1/productos')
         .then(res => res.json())
         .then((data) => {
           this.setState({ productos: data })

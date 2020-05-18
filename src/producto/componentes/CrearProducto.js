@@ -26,7 +26,7 @@ class CrearProducto extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        let url = 'http://127.0.0.1:8080/producto';
+        let url = 'http://127.0.0.1:8080/api/v1/productos';
 
         let fileImg = this.fileInput.current.files[0];
 
